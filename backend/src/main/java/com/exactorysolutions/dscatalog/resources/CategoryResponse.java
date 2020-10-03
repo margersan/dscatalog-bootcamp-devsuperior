@@ -28,7 +28,7 @@ public class CategoryResponse {
 		*/	
 		//return ResponseEntity.ok().body(list); -- As duas formas ok().body(list) e ok(list) funcionam
 		
-		//No curso o Nélio Criou uma lista List<Category> list = service.findAll()
+		//No curso o Nélio criou uma lista List<Category> list = service.findAll()
 		return ResponseEntity.ok(service.findAll());
 	}
 
