@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exactorysolutions.dscatalog.entities.Category;
+import com.exactorysolutions.dscatalog.dto.CategoryDTO;
 import com.exactorysolutions.dscatalog.services.CategoryService;
 
 
@@ -20,7 +20,7 @@ public class CategoryResponse {
 	private CategoryService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		/* Teste da Categories sem o banco de dados implementado
 		List<Category> list = new ArrayList<>();
 		list.add(new Category(1L, "Books"));
