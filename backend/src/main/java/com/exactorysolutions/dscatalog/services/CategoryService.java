@@ -1,14 +1,14 @@
 package com.exactorysolutions.dscatalog.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +38,14 @@ public class CategoryService {
 	 */
 	
 	@Transactional(readOnly = true) //garante que as transações não fiquem aberta e serão encerradas na camada view / readOnly não "locka" a tabela
-	public List<CategoryDTO> findAll() {
-		List<Category> list = repository.findAll();
+	public Page<CategoryDTO> findAllPaged(PageRequest pageable) {
+		Page<Category> list = repository.findAll(pageable);
 		
 		//Expressão lambda (bem legal)
-		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+		// quando o retorno era lista tínhamos que usar o stream
+		//return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+				
+		return list.map(x -> new CategoryDTO(x));
 		
 		/* Função explicando de forma didática que foi substituída por uma expressão lambda
 		 * List<CategoryDTO> listDTO = new ArrayList<>();
