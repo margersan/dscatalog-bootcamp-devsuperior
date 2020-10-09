@@ -1,6 +1,7 @@
 package com.exactorysolutions.dscatalog.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.exactorysolutions.dscatalog.dto.CategoryDTO;
 import com.exactorysolutions.dscatalog.entities.Category;
 import com.exactorysolutions.dscatalog.repositories.CategoryRepository;
+import com.exactorysolutions.dscatalog.services.exceptions.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -44,5 +46,13 @@ public class CategoryService {
 		 * }
 		 * return listDTO;
 		 */
+	}
+
+	public CategoryDTO findById(Long id) {
+		Optional<Category> obj = repository.findById(id); //repository.findById retorna um Optional para tratar os Nulos
+		//Category entity = obj.get(); //para acessar o dado usa-se o método get
+		//obj.orElseThrow - permite, caso não tenha a categoria, enviar uma exception
+		Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found!"));
+		return new CategoryDTO(entity);
 	}
 }
