@@ -1,11 +1,15 @@
 package com.exactorysolutions.dscatalog.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +21,13 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	//Anotation para gravar as informações no banco como UTC
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant createdAt;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant updatedAt;
 	
 	public Category() {
 	}
@@ -40,6 +51,24 @@ public class Category implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
+	
+	@PrePersist //evento de criar o dado no banco será executado
+	public void prePersist() {
+		createdAt = Instant.now();
+	}
+	
+	@PreUpdate //evento de atualizar os dados será executado
+	public void preUpdate() {
+		updatedAt = Instant.now();
 	}
 
 	@Override
