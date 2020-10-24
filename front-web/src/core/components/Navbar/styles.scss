@@ -16,7 +16,7 @@
 .main-menu {
     display: flex;
     font-size: 18px;
-    width: 380 px;
+    width: 380px;
     justify-content: space-between;
 
     a {
@@ -27,7 +27,14 @@
             font-weight: bold;
             color: #FFF;
         }
+
+        &.selected {
+            font-weight: bold;
+            color: #FFF;
+        }
+
         &:hover {
+            font-weight: bold;
             color: #FFF;
         }
     }
